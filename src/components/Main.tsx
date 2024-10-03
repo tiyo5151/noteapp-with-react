@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Main.css';
 import { MainProps } from '../types/Main';
+import ReactMarkdown from 'react-markdown';
 
 const Main: React.FC<MainProps> = ({ activeNote, onUpdateNote }) => {
   const onEditNote = (key: string, value: string | null) => {
@@ -19,6 +20,7 @@ const Main: React.FC<MainProps> = ({ activeNote, onUpdateNote }) => {
         <input
           id="title"
           type="text"
+          placeholder="New Note"
           value={activeNote.title}
           onChange={(e) => onEditNote('title', e.target.value)}
         />
@@ -31,7 +33,9 @@ const Main: React.FC<MainProps> = ({ activeNote, onUpdateNote }) => {
       </div>
       <div className="app-main-note-preview">
         <h1 className="preview-title">{activeNote.title}</h1>
-        <div className="markdown-preview">{activeNote.content}</div>
+        <ReactMarkdown className="markdown-preview">
+          {activeNote.content}
+        </ReactMarkdown>
       </div>
     </div>
   );

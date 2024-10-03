@@ -1,19 +1,31 @@
 import './App.css';
 import Main from './components/Main';
 import Sidebar from './components/Sidebar';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { newNote } from './types/App';
 import { v4 as uuid } from 'uuid';
 
 function App() {
-  const [notes, setNotes] = useState<newNote[]>([]);
+  const [notes, setNotes] = useState<newNote[]>(() => {
+    const savedNotes = localStorage.getItem('notes');
+    return savedNotes ? JSON.parse(savedNotes) : [];
+  });
   const [activeNote, setActiveNote] = useState<string | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }, [notes]);
+
+  useEffect(() => {
+    setActiveNote(notes[0]?.id || null);
+  }, []);
+
   const onAddNote = () => {
     // console.log('Add note');
     const newNote: newNote = {
       id: uuid(),
-      title: '新しいノート',
-      content: 'ノートの内容',
+      title: 'New Note',
+      content: '',
       modDate: Date.now(),
     };
     setNotes([...notes, newNote]);
