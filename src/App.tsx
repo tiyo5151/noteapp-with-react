@@ -25,7 +25,7 @@ function App() {
   };
 
   const getActiveNote = useMemo(() => {
-    return notes.find((note) => note.id === activeNote) || null;
+    return notes.find((note) => note.id === activeNote);
   }, [notes, activeNote]);
 
   const onUpdateNote = (updateNote: newNote): newNote | null => {
@@ -47,7 +47,11 @@ function App() {
         activeNote={activeNote}
         setActiveNote={setActiveNote}
       />
-      <Main activeNote={getActiveNote} onUpdateNote={onUpdateNote} />
+      {getActiveNote ? (
+        <Main activeNote={getActiveNote} onUpdateNote={onUpdateNote} />
+      ) : (
+        <div className="select-note">Please select a note</div>
+      )}
     </div>
   );
 }

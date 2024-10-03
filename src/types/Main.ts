@@ -1,7 +1,7 @@
 import { newNote } from './App';
 
 interface MainProps {
-  activeNote: newNote | null;
+  activeNote: newNote;
   onUpdateNote: (updateNote: newNote) => newNote | null;
 }
 
